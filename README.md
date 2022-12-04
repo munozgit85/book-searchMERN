@@ -1,68 +1,80 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Book-SearchMERN
 
-## Available Scripts
+![npm express](https://img.shields.io/npm/l/express)</br>
 
-In the project directory, you can run:
+## Description
 
-### `yarn start`
+This application is a book search engine
+When the application is loaded, then presented with a menu with the options
+Search for Books and Login/Signup and an input field to search for books and a submit button.
+When the user clicks on the Search for Books menu option, then presented with an input field
+to search for books and a submit button. When not logged in and enter a search term in the input
+field and click the submit button, then there are several search results, each featuring
+a book’s title, author, description, image, and a link to that book on the Google Books site.
+When the Login/Signup menu option is clicked, then a modal appears on the screen with a
+toggle between the option to log in or sign up. When the toggle is set to Signup, then
+there are three inputs for a username, an email address, and a password, and a signup button.
+When the toggle is set to Login, then there are two inputs for an email address and a password
+and login button. When the user enters a valid email address, create a password and click on the
+signup button, then a user account is created and the user is logged in to the site.
+When the user enters their account’s email address and password and click on the login button,
+then the modal closes and the user is logged in to the site. when logged in to the site
+then the menu options change to Search for Books, an option to see my saved books, and Logout.
+When logged in and a search term is entered into the input field, after clicking the submit button
+then there are several search results, each featuring a book’s title, author, description, image,
+and a link to that book on the Google Books site and a button to save a book to the user's account.
+When Save button is clicked on a book, thenthat book’s information is saved to the user's account.
+When the see my saved books option is clicked, then all of the books that have been saved to the account,
+each featuring the book’s title, author, description, image, and a link to that book on the Google
+Books site and a button to remove a book from my account is presented.
+When the Remove button is clicked on a book, then that book is deleted from my saved books list.
+When the Logout button is clicked, then the user is logged out of the site and presented with a menu
+with the options Search for Books and Login/Signup and an input field to search for books and a submit button
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Table of Contents
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+- [Installation](#Installation)
+- [Usage](#Usage)
+- [ScreenShot](#Screenshot)
+- [Github](#Github)
+- [License](#license)
+- [Contributing](#Contributing)
+- [Tests](#Tests)
+- [Questions](#Questions)
 
-### `yarn test`
+---
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Installation
 
-### `yarn build`
+-Ensure that Node is already installed https://nodejs.org/en/download/
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- install npm packages with `npi i` in CLI of root directory after cloning files.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+## Usage
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- First clone the repository from GitHub.
+- Complete the necessary installation, in the installation tab.
+- then run `npm start` from the root directory
 
-### `yarn eject`
+# Screenshot
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Github Deployed Site
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## License
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+MIT
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Contributing
 
-## Learn More
+none
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Test
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+none
 
-### Code Splitting
+## Questions
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+For further Questions About This Application , Please Feel Free To Use The Contact Below:
 
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+> Email: Racquelg85@hotmail.com
+> GitHub : [Racquel](https://github.com/munozgit85/book-searchMERN.git)
