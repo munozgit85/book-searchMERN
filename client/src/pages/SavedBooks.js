@@ -6,21 +6,24 @@ import {
   Card,
   Button,
 } from "react-bootstrap";
-import { useQuery, useMutation } from "@apollo/client";
-import { GET_ME } from "../utils/queries";
-import { REMOVE_BOOK } from "../utils/mutations";
-import { removeBookId } from "../utils/localStorage";
+
 import Auth from "../utils/auth";
+import { removeBookId } from "../utils/localStorage";
+
+import { useQuery } from "@apollo/client";
+import { GET_ME } from "../utils/queries";
+
+import { useMutation } from "@apollo/client";
+import { REMOVE_BOOK } from "../utils/mutations";
 
 const SavedBooks = () => {
   const { loading, data } = useQuery(GET_ME);
-  const [removeBook, { error }] = useMutation(REMOVE_BOOK);
+
+  const [deleteBook, { error }] = useMutation(REMOVE_BOOK);
 
   const userData = data?.me || {};
 
-  // create function that accepts the book's _id value as param and deletes the book from the database
   const handleDeleteBook = async (bookId) => {
-    // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
     if (!token) {
@@ -28,12 +31,22 @@ const SavedBooks = () => {
     }
 
     try {
-      await removeBook({
+      await deleteBook({
         variables: { bookId },
       });
 
       // upon success, remove book's id from localStorage
       removeBookId(bookId);
+      document.getElementById(bookId).remove();
+      let counterEl = document.getElementById("counter");
+      let currentNum = parseInt(counterEl.innerText.split(" ")[1]);
+      if (currentNum === 1) {
+        return (counterEl.innerText = "You have no saved books!");
+      } else {
+        counterEl.innerText = `Viewing ${currentNum - 1} saved ${
+          currentNum === 1 ? "book" : "books"
+        }`;
+      }
     } catch (err) {
       console.error(err);
     }
@@ -48,21 +61,21 @@ const SavedBooks = () => {
     <>
       <Jumbotron fluid className="text-light bg-dark">
         <Container>
-          <h1>Viewing {userData.username}'s books!</h1>
+          <h1>Viewing saved books!</h1>
         </Container>
       </Jumbotron>
       <Container>
-        <h2>
-          {userData.savedBooks?.length
+        <h2 id="counter">
+          {userData.savedBooks.length
             ? `Viewing ${userData.savedBooks.length} saved ${
                 userData.savedBooks.length === 1 ? "book" : "books"
               }:`
             : "You have no saved books!"}
         </h2>
         <CardColumns>
-          {userData.savedBooks?.map((book) => {
+          {userData.savedBooks.map((book, key) => {
             return (
-              <Card key={book.bookId} border="dark">
+              <Card key={key} id={book.bookId} border="dark">
                 {book.image ? (
                   <Card.Img
                     src={book.image}
@@ -74,20 +87,26 @@ const SavedBooks = () => {
                   <Card.Title>{book.title}</Card.Title>
                   <p className="small">Authors: {book.authors}</p>
                   <Card.Text>{book.description}</Card.Text>
+                  <a
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    sid="link"
+                    href={book.link}
+                  >
+                    {book.link == null ? "No link available" : "Link to google"}
+                  </a>
                   <Button
                     className="btn-block btn-danger"
                     onClick={() => handleDeleteBook(book.bookId)}
                   >
                     Delete this Book!
                   </Button>
-                  {error && (
-                    <span className="ml-2">Something went wrong...</span>
-                  )}
                 </Card.Body>
               </Card>
             );
           })}
         </CardColumns>
+        {error && <div>There was an issue viewing your books</div>}
       </Container>
     </>
   );

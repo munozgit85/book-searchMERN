@@ -13,21 +13,43 @@ import Auth from "../utils/auth";
 import { searchGoogleBooks } from "../utils/API";
 import { saveBookIds, getSavedBookIds } from "../utils/localStorage";
 
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 import { SAVE_BOOK } from "../utils/mutations";
 
+import { GET_ME } from "../utils/queries";
+
 const SearchBooks = () => {
-  const [saveBook, { error }] = useMutation(SAVE_BOOK);
-  // create state for holding returned google api data
   const [searchedBooks, setSearchedBooks] = useState([]);
-  // create state for holding our search field data
+
   const [searchInput, setSearchInput] = useState("");
 
   // create state to hold saved bookId values
   const [savedBookIds, setSavedBookIds] = useState(getSavedBookIds());
 
-  // set up useEffect hook to save `savedBookIds` list to localStorage on component unmount
-  // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
+  const [saveBook] = useMutation(SAVE_BOOK, {
+    //saved books placed in cache
+    update(cache, { data: { saveBook } }) {
+      try {
+        const { me } = cache.readQuery({
+          query: GET_ME,
+        });
+
+        cache.writeQuery({
+          query: GET_ME,
+          data: {
+            me: {
+              ...me,
+              savedBooks: [
+                ...me.savedBooks,
+                saveBook.savedBooks[saveBook.savedBooks.length - 1],
+              ],
+            },
+          },
+        });
+      } catch (e) {}
+    },
+  });
+
   useEffect(() => {
     return () => saveBookIds(savedBookIds);
   });
@@ -51,6 +73,7 @@ const SearchBooks = () => {
 
       const bookData = items.map((book) => ({
         bookId: book.id,
+        link: book.volumeInfo.previewLink,
         authors: book.volumeInfo.authors || ["No author to display"],
         title: book.volumeInfo.title,
         description: book.volumeInfo.description,
@@ -69,33 +92,23 @@ const SearchBooks = () => {
     // find the book in `searchedBooks` state by the matching id
     const bookToSave = searchedBooks.find((book) => book.bookId === bookId);
 
-    // get token
+    // get tokens
     const token = Auth.loggedIn() ? Auth.getToken() : null;
-
     if (!token) {
       return false;
     }
 
-    // try {
-    //   const response = await saveBook(bookToSave, token);
-
-    //   if (!response.ok) {
-    //     throw new Error('something went wrong!');
-    //   }
-
     try {
-      const { data } = await saveBook({
-        variables: { input: bookToSave },
+      await saveBook({
+        variables: { bookToSave },
       });
 
-      if (error) {
-        throw new Error("something went wrong!");
-      }
-
-      console.log(data);
       // if book successfully saves to user's account, save book id to state
       setSavedBookIds([...savedBookIds, bookToSave.bookId]);
+      saveBookIds(savedBookIds);
     } catch (err) {
+      // console.log(error.networkError.result.errors);
+
       console.error(err);
     }
   };
@@ -148,6 +161,7 @@ const SearchBooks = () => {
                   <Card.Title>{book.title}</Card.Title>
                   <p className="small">Authors: {book.authors}</p>
                   <Card.Text>{book.description}</Card.Text>
+
                   {Auth.loggedIn() && (
                     <Button
                       disabled={savedBookIds?.some(
@@ -163,6 +177,14 @@ const SearchBooks = () => {
                         : "Save this Book!"}
                     </Button>
                   )}
+                  <a
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    id="link"
+                    href={book.link}
+                  >
+                    {book.link == null ? "No link available" : "Link to google"}
+                  </a>
                 </Card.Body>
               </Card>
             );
