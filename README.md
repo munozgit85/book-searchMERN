@@ -67,7 +67,7 @@ https://github.com/munozgit85/book-searchMERN.git
 
 ## Heroku
 
-https://git.heroku.com/rocky-escarpment-37878.git
+https://rocky-escarpment-37878.herokuapp.com/
 
 ## License
 
