@@ -37,6 +37,7 @@ with the options Search for Books and Login/Signup and an input field to search 
 - [Usage](#Usage)
 - [ScreenShot](#Screenshot)
 - [Github](#Github)
+- [Heroku](#Heroku)
 - [License](#license)
 - [Contributing](#Contributing)
 - [Tests](#Tests)
@@ -60,8 +61,13 @@ with the options Search for Books and Login/Signup and an input field to search 
 
 <img width="1440" alt="Screen Shot 2022-12-04 at 2 14 45 PM" src="https://user-images.githubusercontent.com/107218022/205513387-bab8e0ca-8567-4fac-a9a0-1ff650472b73.png">
 
+## Github
 
-## Github Deployed Site
+https://github.com/munozgit85/book-searchMERN.git
+
+## Heroku
+
+https://git.heroku.com/rocky-escarpment-37878.git
 
 ## License
 
